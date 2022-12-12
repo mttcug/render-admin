@@ -1,15 +1,13 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   EditOutlined,
   DeleteOutlined,
   FileDoneOutlined
 } from "@ant-design/icons";
-import { Space, Card, Skeleton, Switch } from "antd";
+import { Space, Card, Skeleton } from "antd";
 import "./index.scss";
 
 const Applications = props => {
-  const { Meta } = Card;
-
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -36,13 +34,15 @@ const Applications = props => {
                   actions={[
                     <FileDoneOutlined
                       onClick={() => {
-                        linkTo("/createApp/appBuild?type=edit");
+                        linkTo(`/createApp/AppContent?appId=${app.appId}`);
                       }}
                     />,
                     <EditOutlined
                       key="edit"
                       onClick={() => {
-                        linkTo("/createApp/appBuild?type=edit");
+                        linkTo(
+                          `/createApp/appBuild?type=edit&appId=${app.appId}`
+                        );
                       }}
                     />,
                     <DeleteOutlined />

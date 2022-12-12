@@ -427,6 +427,16 @@ export const advancedElements = [
     setting: {}
   },
   {
+    text: "图片上传",
+    name: "uploadImg",
+    schema: {
+      title: "图片展示",
+      type: "string",
+      widget: "uploadImg"
+    },
+    setting: {}
+  },
+  {
     text: "颜色选择",
     name: "color",
     schema: {

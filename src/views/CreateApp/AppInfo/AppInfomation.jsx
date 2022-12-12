@@ -9,7 +9,7 @@ const AppInfomation = props => {
     const apps = JSON.parse(sessionStorage.getItem("app") || "[]");
     apps.push(values);
     sessionStorage.setItem("app", JSON.stringify(apps));
-    props.history.push("/createApp/appBuild");
+    props.history.push(`/createApp/appBuild?appId=${appId}`);
   };
   const failed = errorInfo => {
     console.log("Failed:", errorInfo);

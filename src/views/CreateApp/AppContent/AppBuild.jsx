@@ -1,18 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Button, Checkbox, Form, Input } from "antd";
 import Generator from "fr-generator";
-import "antd/dist/antd.css";
 import "./index.scss";
 import {
   defaultSettings,
   defaultCommonSettings,
   globalSettings
 } from "./settings/index";
-import DataSource from "./widgets/index";
+import { DataSource, UploadImg } from "./widgets/index";
+import { getUrlParams } from "@/assets/utils/index.js";
 
-const AppBuild = () => {
+const AppBuild = props => {
   const { from, pathname, search } = useLocation();
+  // 创建应用的唯一标识AppId
+  const appId = getUrlParams("appId", search);
 
   // Generator的props
   // defaultValue,
@@ -45,10 +46,28 @@ const AppBuild = () => {
       }
     }
   };
+  const [schema, setSchema] = useState(defaultValue);
+
+  useEffect(() => {
+    const schemasCache = JSON.parse(sessionStorage.getItem("schemas") || "{}");
+    if (schemasCache[appId]) {
+      setSchema(schemasCache[appId]);
+    }
+  }, []);
 
   // 获取生成器最后的结果
   const getAppFromData = () => {
     const value = genRef.current && genRef.current.getValue();
+    setSchema(value);
+  };
+
+  const saveAppSchema = () => {
+    const value = genRef.current && genRef.current.getValue();
+    console.log("------*******:", value);
+    const schemasCache = JSON.parse(sessionStorage.getItem("schemas") || "{}");
+    schemasCache[appId] = value;
+    sessionStorage.setItem("schemas", JSON.stringify(schemasCache));
+    props.history.push(`/createApp/AppContent?appId=${appId}`);
   };
 
   const onChange = value => {
@@ -57,11 +76,13 @@ const AppBuild = () => {
 
   // 自定义组件
   const widgets = {
-    dataSource: DataSource
+    dataSource: DataSource,
+    uploadImg: UploadImg
   };
   // 组件映射
   const mappings = {
-    dataSource: "dataSource"
+    dataSource: "dataSource",
+    uploadImg: "uploadImg"
   };
 
   // 配置canvas上的保存按钮
@@ -73,9 +94,9 @@ const AppBuild = () => {
       }
     },
     {
-      text: "保存",
+      text: "提交",
       onClick: event => {
-        getAppFromData();
+        saveAppSchema();
       }
     }
   ];
@@ -86,7 +107,7 @@ const AppBuild = () => {
         ref={genRef}
         widgets={widgets}
         mapping={mappings}
-        defaultValue={defaultValue}
+        defaultValue={schema}
         extraButtons={extraButtons}
         settings={defaultSettings}
         globalSettings={globalSettings}

@@ -9,7 +9,14 @@ const AppInfomation = loadable(() =>
   import(/* webpackChunkName: 'AppInfomation' */ "@/views/CreateApp/AppInfo")
 );
 const AppBuild = loadable(() =>
-  import(/* webpackChunkName: 'AppBuild' */ "@/views/CreateApp/AppContent")
+  import(
+    /* webpackChunkName: 'AppBuild' */ "@/views/CreateApp/AppContent/AppBuild"
+  )
+);
+const AppContent = loadable(() =>
+  import(
+    /* webpackChunkName: 'AppContent' */ "@/views/CreateApp/AppContent/AppContent"
+  )
 );
 const Applications = loadable(() =>
   import(/* webpackChunkName: 'Applications' */ "@/views/Apps/Applications")
@@ -33,6 +40,13 @@ const routes = [
     exact: false,
     name: "应用搭建",
     component: AppBuild,
+    auth: [1]
+  },
+  {
+    path: "/createApp/AppContent",
+    exact: false,
+    name: "应用内容",
+    component: AppContent,
     auth: [1]
   },
   {

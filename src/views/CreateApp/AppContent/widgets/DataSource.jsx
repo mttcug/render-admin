@@ -42,7 +42,7 @@ const DataSource = props => {
           label: "Tom"
         }
       ].map(item => (
-        <Option value={item.value}>
+        <Option value={item.value} key={item.label}>
           <DatabaseOutlined style={{ color: "#1890ff", marginRight: 10 }} />
           {item.label}
         </Option>

@@ -1,3 +1,4 @@
 import AppBuild from "./AppBuild.jsx";
+import AppContent from "./AppContent.jsx";
 
-export default AppBuild;
+export { AppBuild, AppContent };
