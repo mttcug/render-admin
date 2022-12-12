@@ -9,9 +9,9 @@ import {
   defaultCommonSettings,
   globalSettings
 } from "./settings/index";
-import { dataSource, MyWidget2 } from "./widgets/index";
+import DataSource from "./widgets/index";
 
-const CreateApp = () => {
+const AppBuild = () => {
   const { from, pathname, search } = useLocation();
 
   // Generator的props
@@ -57,13 +57,11 @@ const CreateApp = () => {
 
   // 自定义组件
   const widgets = {
-    dataSource: dataSource,
-    w2: MyWidget2
+    dataSource: DataSource
   };
   // 组件映射
   const mappings = {
-    dataSource: "dataSource",
-    w2: "w2"
+    dataSource: "dataSource"
   };
 
   // 配置canvas上的保存按钮
@@ -99,4 +97,4 @@ const CreateApp = () => {
   );
 };
 
-export default CreateApp;
+export default AppBuild;

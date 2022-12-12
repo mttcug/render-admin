@@ -1,3 +1,3 @@
-import { dataSource, MyWidget2 } from "./MyWidget";
+import DataSource from "./DataSource.jsx";
 
-export { dataSource, MyWidget2 };
+export default DataSource;

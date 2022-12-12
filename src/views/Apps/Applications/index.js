@@ -1,3 +1,3 @@
-import Applications from "./index.jsx"
+import Applications from "./Applications.jsx";
 
-export default Applications
+export default Applications;

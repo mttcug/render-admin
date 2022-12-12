@@ -1,3 +1,3 @@
-import CreateApp from "./index.jsx";
+import AppBuild from "./AppBuild.jsx";
 
-export default CreateApp;
+export default AppBuild;

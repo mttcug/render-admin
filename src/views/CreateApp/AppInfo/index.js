@@ -1,3 +1,3 @@
-import AppInfomation from "./index.jsx";
+import AppInfomation from "./AppInfomation.jsx";
 
 export default AppInfomation;

@@ -1,12 +1,13 @@
 import React from "react";
 import { Select } from "antd";
+import { DatabaseOutlined } from "@ant-design/icons";
 
 /**
  * 从数据库绑定数据
  * @returns
  */
-export const dataSource = props => {
-  console.log("----ooooo:", props);
+const DataSource = props => {
+  const { Option } = Select;
   // 这里的onChange很重要， 把最终的值获取到穿出去，schema才能获取到
   const { onChange } = props;
   const change = value => {
@@ -26,7 +27,8 @@ export const dataSource = props => {
       filterOption={(input, option) =>
         (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
       }
-      options={[
+    >
+      {[
         {
           value: "jack",
           label: "Jack"
@@ -39,11 +41,14 @@ export const dataSource = props => {
           value: "tom",
           label: "Tom"
         }
-      ]}
-    />
+      ].map(item => (
+        <Option value={item.value}>
+          <DatabaseOutlined style={{ color: "#1890ff", marginRight: 10 }} />
+          {item.label}
+        </Option>
+      ))}
+    </Select>
   );
 };
 
-export const MyWidget2 = () => {
-  return <p>MyWidget2</p>;
-};
+export default DataSource;
