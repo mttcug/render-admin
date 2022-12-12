@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import FormRender, { useForm } from "form-render";
 import { getUrlParams } from "@/assets/utils/index.js";
 import { Button } from "antd";
+import "./index.scss";
 
 const AppContent = props => {
   const { from, pathname, search } = useLocation();
@@ -21,7 +22,7 @@ const AppContent = props => {
   };
 
   return (
-    <div>
+    <div className="app-content-container">
       <FormRender form={form} schema={schema} onFinish={onFinish} />
       <Button type="primary" onClick={form.submit}>
         提交
