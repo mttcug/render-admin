@@ -20,83 +20,85 @@ const AppInfomation = props => {
 
   return (
     <div className="app-info-container">
-      <p>创建您的Application</p>
-      <Form
-        name="basic"
-        className="app-info-form"
-        labelCol={{
-          span: 5
-        }}
-        wrapperCol={{
-          span: 16
-        }}
-        onFinish={save}
-        onFinishFailed={failed}
-        autoComplete="off"
-      >
-        <Form.Item
-          label="应用名称"
-          name="appName"
-          rules={[
-            {
-              required: true,
-              message: "请输入应用名称!"
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="应用id"
-          name="appId"
-          rules={[
-            {
-              required: true,
-              message: "请输入应用id!"
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="创建人"
-          name="creator"
-          rules={[
-            {
-              required: true,
-              message: "请输入创建人!"
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="应用描述"
-          name="desc"
-          rules={[
-            {
-              required: false,
-              message: "请输入应用描述!"
-            }
-          ]}
-        >
-          <TextArea rows={4} placeholder="请输入详细描述" />
-        </Form.Item>
-
-        <Form.Item
+      <div className="create-info">
+        <p>创建您的Application</p>
+        <Form
+          name="basic"
+          className="app-info-form"
+          labelCol={{
+            span: 5
+          }}
           wrapperCol={{
-            offset: 8,
             span: 16
           }}
+          onFinish={save}
+          onFinishFailed={failed}
+          autoComplete="off"
         >
-          <Button type="primary" htmlType="submit">
-            创建应用
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item
+            label="应用名称"
+            name="appName"
+            rules={[
+              {
+                required: true,
+                message: "请输入应用名称!"
+              }
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="应用id"
+            name="appId"
+            rules={[
+              {
+                required: true,
+                message: "请输入应用id!"
+              }
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="创建人"
+            name="creator"
+            rules={[
+              {
+                required: true,
+                message: "请输入创建人!"
+              }
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="应用描述"
+            name="desc"
+            rules={[
+              {
+                required: false,
+                message: "请输入应用描述!"
+              }
+            ]}
+          >
+            <TextArea rows={4} placeholder="请输入详细描述" />
+          </Form.Item>
+
+          <Form.Item
+            wrapperCol={{
+              offset: 8,
+              span: 16
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              创建应用
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   );
 };

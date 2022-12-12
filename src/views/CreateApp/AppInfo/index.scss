@@ -1,17 +1,21 @@
 .app-info-container {
+  height: 100%;
+  background: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 25rem;
-  height: 100%;
-  background: #fff;
-  p {
-    text-align: center;
-    font-size: 2.5rem;
-  }
-  .app-info-form {
-    border: 1px solid #dcdcdc;
+  align-items: center;
+  .create-info {
+    width: 60rem;
+    box-shadow: 1px 1px 15px 0px lightgrey;
     border-radius: 2rem;
-    padding-top: 5rem;
+    padding: 3rem;
+    p {
+      text-align: center;
+      font-size: 2.5rem;
+    }
+    .app-info-form {
+      padding-top: 5rem;
+    }
   }
 }
