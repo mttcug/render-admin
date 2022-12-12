@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Generator from "fr-generator";
-import "./index.scss";
 import {
   defaultSettings,
   defaultCommonSettings,
@@ -9,9 +8,11 @@ import {
 } from "./settings/index";
 import { DataSource, UploadImg } from "./widgets/index";
 import { getUrlParams } from "@/assets/utils/index.js";
+import "./index.scss";
 
 const AppBuild = props => {
-  const { from, pathname, search } = useLocation();
+  const { search } = useLocation();
+
   // 创建应用的唯一标识AppId
   const appId = getUrlParams("appId", search);
 
@@ -61,18 +62,16 @@ const AppBuild = props => {
     setSchema(value);
   };
 
+  // 保存并提交提交schema信息
   const saveAppSchema = () => {
     const value = genRef.current && genRef.current.getValue();
-    console.log("------*******:", value);
     const schemasCache = JSON.parse(sessionStorage.getItem("schemas") || "{}");
     schemasCache[appId] = value;
     sessionStorage.setItem("schemas", JSON.stringify(schemasCache));
     props.history.push(`/createApp/AppContent?appId=${appId}`);
   };
 
-  const onChange = value => {
-    console.log("------onChange:", value);
-  };
+  const onChange = value => {};
 
   // 自定义组件
   const widgets = {

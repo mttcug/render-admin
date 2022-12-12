@@ -10,14 +10,15 @@ import "./index.scss";
 const Applications = props => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    // 获取App信息
     const apps = JSON.parse(sessionStorage.getItem("app") || "[]");
     setApplications(apps);
     setLoading(false);
   }, []);
 
   const linkTo = url => {
-    console.log("-----url:", url);
     props.history.replace(url);
   };
 

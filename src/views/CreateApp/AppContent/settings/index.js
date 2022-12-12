@@ -430,7 +430,7 @@ export const advancedElements = [
     text: "图片上传",
     name: "uploadImg",
     schema: {
-      title: "图片展示",
+      title: "图片上传",
       type: "string",
       widget: "uploadImg"
     },

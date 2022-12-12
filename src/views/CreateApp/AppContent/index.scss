@@ -25,4 +25,23 @@
 
 .app-content-container {
   padding: 5rem;
+  display: flex;
+  justify-content: center;
+  background: #fff;
+  height: 100%;
+  .content {
+    max-width: 80rem;
+    border: 1px solid lightgray;
+    border-radius: 3rem;
+    padding: 5rem;
+    .app-title {
+      text-align: center;
+      font-size: 2rem;
+    }
+    .submit {
+      left: 50%;
+      transform: translateX(-50%);
+      margin-top: 2rem;
+    }
+  }
 }

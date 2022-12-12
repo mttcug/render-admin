@@ -4,6 +4,8 @@ import "./index.scss";
 
 const AppInfomation = props => {
   const { TextArea } = Input;
+
+  // 保存创建的Application信息， 并跳转表单信息构建页面
   const save = values => {
     const { appName, appId } = values;
     const apps = JSON.parse(sessionStorage.getItem("app") || "[]");
@@ -11,9 +13,11 @@ const AppInfomation = props => {
     sessionStorage.setItem("app", JSON.stringify(apps));
     props.history.push(`/createApp/appBuild?appId=${appId}`);
   };
+
   const failed = errorInfo => {
     console.log("Failed:", errorInfo);
   };
+
   return (
     <div className="app-info-container">
       <p>创建您的Application</p>
