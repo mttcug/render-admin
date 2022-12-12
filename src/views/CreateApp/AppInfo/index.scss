@@ -1,0 +1,17 @@
+.app-info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 25rem;
+  height: 100%;
+  background: #fff;
+  p {
+    text-align: center;
+    font-size: 2.5rem;
+  }
+  .app-info-form {
+    border: 1px solid #dcdcdc;
+    border-radius: 2rem;
+    padding-top: 5rem;
+  }
+}

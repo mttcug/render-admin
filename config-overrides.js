@@ -11,7 +11,7 @@ module.exports = override(
         ['@']: path.resolve(__dirname, 'src')
     }),
     (config) => {
-        config.devtool = 'source-map'
+        config.devtool = 'cheap-module-source-map'
         return config
     }
 )
