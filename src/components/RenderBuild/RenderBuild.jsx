@@ -47,12 +47,12 @@ const RenderBuild = props => {
       }
     }
   };
-  const [schema, setSchema] = useState(props.schema || defaultValue);
 
+  const [schema, setSchema] = useState(props.schema || defaultValue);
+  // schema变化时，重新设置setValue
   useEffect(() => {
     setSchema(schema);
-    console.log("------setValue");
-    genRef.current.setValue(schema);
+    genRef.current.setValue(props.schema);
   }, [props.schema]);
 
   // 获取生成器最后的结果
@@ -64,15 +64,20 @@ const RenderBuild = props => {
   // 保存并提交提交schema信息
   const saveAppSchema = () => {
     const value = genRef.current && genRef.current.getValue();
+    // 将schema回传给父组件
     props.submit(value);
   };
 
   const onChange = value => {
     props.onChange(value);
   };
+
+  // schema变化
   const onSchemaChange = schema => {
     props.onSchemaChange(schema);
   };
+
+  // canvas选中组件
   const onCanvasSelect = schema => {
     props.onCanvasSelect(schema);
   };

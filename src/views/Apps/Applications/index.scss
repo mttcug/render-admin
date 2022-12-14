@@ -1,6 +1,12 @@
 .site-card-border-less-wrapper {
-    margin: 1rem;
-    .ant-card-body {
-        height: 200px;
-    }
+  margin: 1rem;
+  .ant-card-body {
+    height: 200px;
+  }
+}
+.application-container {
+  background: #fff;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
 }
