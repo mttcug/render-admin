@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -27,16 +27,23 @@ const Login = loadable(() =>
   import(/* webpackChunkName: 'login' */ "./views/Login")
 );
 
-const App = () => (
-  <Router>
-    <Switch>
-      <Route path="/" exact render={() => <Redirect to="/index" />} />
-      <Route path="/500" component={View500} />
-      <Route path="/login" component={Login} />
-      <Route path="/404" component={View404} />
-      <Route component={DefaultLayout} />
-    </Switch>
-  </Router>
-);
+const App = () => {
+  useEffect(() => {
+    window.process = {
+      ...window.process
+    };
+  }, []);
+  return (
+    <Router>
+      <Switch>
+        <Route path="/" exact render={() => <Redirect to="/index" />} />
+        <Route path="/500" component={View500} />
+        <Route path="/login" component={Login} />
+        <Route path="/404" component={View404} />
+        <Route component={DefaultLayout} />
+      </Switch>
+    </Router>
+  );
+};
 
 export default App;

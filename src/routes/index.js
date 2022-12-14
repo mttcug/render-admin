@@ -22,6 +22,20 @@ const Applications = loadable(() =>
   import(/* webpackChunkName: 'Applications' */ "@/views/Apps/Applications")
 );
 
+const DataSource = loadable(() =>
+  import(
+    /* webpackChunkName: 'DataSource' */ "@/views/Apps/DataSource/DataSource"
+  )
+);
+const CommonModel = loadable(() =>
+  import(
+    /* webpackChunkName: 'CommonModel' */ "@/views/Apps/DataSource/CommonModel"
+  )
+);
+const Apis = loadable(() =>
+  import(/* webpackChunkName: 'Apis' */ "@/views/Apps/DataSource/Apis")
+);
+
 const About = loadable(() =>
   import(/* webpackChunkName: 'about' */ "@/views/About")
 );
@@ -47,6 +61,27 @@ const routes = [
     exact: false,
     name: "应用内容",
     component: AppContent,
+    auth: [1]
+  },
+  {
+    path: "/apps/dataSource/models",
+    exact: false,
+    name: "数据模型",
+    component: DataSource,
+    auth: [1]
+  },
+  {
+    path: "/apps/dataSource/commonModels",
+    exact: false,
+    name: "通用选项集",
+    component: CommonModel,
+    auth: [1]
+  },
+  {
+    path: "/apps/dataSource/apis",
+    exact: false,
+    name: "Apis",
+    component: Apis,
     auth: [1]
   },
   {

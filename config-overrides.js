@@ -1,6 +1,5 @@
-const { override, fixBabelImports, addWebpackAlias, setWebpackPublicPath, overrideDevServer, watchAll } = require('customize-cra')
+const { override, fixBabelImports, addWebpackAlias, setWebpackPublicPath, overrideDevServer, watchAll, addWebpackPlugin } = require('customize-cra')
 const path = require('path')
-const { config } = require('process')
 
 module.exports = {
     webpack: override(
@@ -20,7 +19,6 @@ module.exports = {
     devServer: overrideDevServer(
         watchAll(),
         (config) => {
-            console.log('-------webpackConf:', config)
             return config
         }
     )

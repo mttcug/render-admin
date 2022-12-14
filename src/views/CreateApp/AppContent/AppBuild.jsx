@@ -22,7 +22,7 @@ const AppBuild = props => {
   // 传给表单设计器的schema
   const [schema, setSchema] = useState(defaultValue);
   // 表单设计器当前选中的组件的schema
-  const [curSchema, setCurSchema] = useState("");
+  const [curSchema, setCurSchema] = useState({});
 
   useEffect(() => {
     const schemasCache = JSON.parse(sessionStorage.getItem("schemas") || "{}");
@@ -41,20 +41,30 @@ const AppBuild = props => {
   const onSchemaChange = schema => {
     const _schema = { ...schema };
     const { properties = {} } = schema;
-    const { $id, dataSource } = curSchema;
+    const { $id = "", dataSource = {} } = curSchema;
     const id = String($id).replace("#/", "");
+    console.log("------&&&&&&", schema, dataSource);
     // 判断dataSource变化
-    if (properties[id] && dataSource !== properties[id].dataSource) {
-      const data = { name: "claire", age: "18" };
-      _schema.properties[id].enum = Object.keys(data);
-      _schema.properties[id].enumNames = Object.values(data);
+    if (
+      properties[id] &&
+      properties[id].dataSource &&
+      dataSource.label !== properties[id].dataSource.label
+    ) {
+      const data =
+        (properties[id].dataSource && properties[id].dataSource.data) || [];
+      _schema.properties[id].enum = data.map((_, index) => index);
+      _schema.properties[id].enumNames = data.map((_, index) => _.name);
       setSchema(_schema);
     }
   };
 
   // 表单设计器中组件被选中
-  const onCanvasSelect = schema => {
+  const onCanvasSelect = (schema = {}) => {
     setCurSchema(schema);
+  };
+
+  const onChange = () => {
+    console.log("change");
   };
 
   return (

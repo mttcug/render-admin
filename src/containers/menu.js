@@ -38,8 +38,25 @@ const menu = {
       },
       {
         title: "数据源",
-        key: "/public/datasrouce",
-        icon: <DatabaseOutlined />
+        key: "/apps/dataSource/",
+        icon: <DatabaseOutlined />,
+        subs: [
+          {
+            title: "数据模型",
+            key: "/apps/dataSource/models",
+            icon: <PlusCircleOutlined />
+          },
+          {
+            title: "通用选项集",
+            key: "/apps/dataSource/commonModels",
+            icon: <PlusCircleOutlined />
+          },
+          {
+            title: "Apis",
+            key: "/apps/dataSource/apis",
+            icon: <PlusCircleOutlined />
+          }
+        ]
       },
       { title: "模版", key: "/public/template", icon: <CopyOutlined /> }
     ]

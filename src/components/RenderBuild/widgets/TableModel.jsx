@@ -31,97 +31,16 @@ const schema = {
 };
 
 const TableModel = props => {
-  const { onChange } = props;
-  const { refresh } = useTable();
-
-  const searchApi = (params, sorter) => {
-    console.log("---------PPPPPP:", params);
-    console.group(sorter);
-    return request
-      .get(
-        "https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic",
-        { params }
-      )
-      .then(res => {
-        if (res && res.data) {
-          return {
-            rows: [...res.data, { money: null }],
-            total: res.data.length
-          };
-        }
-      })
-      .catch(e => {
-        console.log("Oops, error", e);
-
-        // 注意一定要返回 rows 和 total
-        return {
-          rows: [],
-          total: 0
-        };
-      });
-  };
+  const { onChange, schema } = props;
+  const { dataSource = "" } = schema;
 
   // 配置完全透传antd table
-  const columns = [
-    {
-      title: "应用名称",
-      dataIndex: "title",
-      valueType: "text",
-      width: "20%"
-    },
-    {
-      title: "应用Id",
-      dataIndex: "address",
-      ellipsis: true,
-      copyable: true,
-      valueType: "text",
-      width: "25%"
-    },
-    {
-      title: (
-        <div>
-          应用状态
-          <Tooltip placement="top" title="使用valueType">
-            <InfoCircleOutlined style={{ marginLeft: 6 }} />
-          </Tooltip>
-        </div>
-      ),
-      enum: {
-        open: "营业中",
-        closed: "已打烊"
-      },
-      dataIndex: "state"
-    },
-    {
-      title: "应用星级",
-      dataIndex: "labels",
-      render: (_, row) => (
-        <Space>
-          {row &&
-            row.labels &&
-            row.labels.map(({ name, color }) => (
-              <Tag color={color} key={name}>
-                {name}
-              </Tag>
-            ))}
-        </Space>
-      )
-    },
+  let columns = [];
 
-    {
-      title: "应用GMV",
-      key: "money",
-      sorter: true,
-      dataIndex: "money",
-      valueType: "money"
-    },
-    {
-      title: "成立时间",
-      key: "created_at",
-      dataIndex: "created_at",
-      valueType: "date"
-    },
-    {
+  // 选择数据源
+  console.log("-----iiiii:,", dataSource);
+  if (dataSource) {
+    const btns = {
       title: "操作",
       render: () => (
         <Space>
@@ -145,8 +64,82 @@ const TableModel = props => {
           </a>
         </Space>
       )
-    }
-  ];
+    };
+    // 根据数据源， 并根据数据源提供的接口名称 请求数据
+    columns = [
+      {
+        title: "应用名称",
+        dataIndex: "title",
+        valueType: "text",
+        width: "20%"
+      },
+      {
+        title: "应用Id",
+        dataIndex: "address",
+        ellipsis: true,
+        copyable: true,
+        valueType: "text",
+        width: "25%"
+      },
+      {
+        title: "应用状态",
+        enum: {
+          open: "营业中",
+          closed: "已打烊"
+        },
+        dataIndex: "state"
+      },
+      {
+        title: "应用星级",
+        dataIndex: "labels"
+      },
+
+      {
+        title: "应用GMV",
+        key: "money",
+        sorter: true,
+        dataIndex: "money",
+        valueType: "money"
+      },
+      {
+        title: "成立时间",
+        key: "created_at",
+        dataIndex: "created_at",
+        valueType: "date"
+      }
+    ];
+    columns.push(btns);
+  }
+
+  const { refresh } = useTable();
+
+  // 请求数据集数据填充表格
+  const searchApi = (params, sorter) => {
+    console.group(sorter);
+    return request
+      .get(
+        "https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic",
+        { params }
+      )
+      .then(res => {
+        console.log("-------99999:", res);
+        if (res && res.data) {
+          return {
+            rows: [...res.data, { money: null }],
+            total: res.data.length
+          };
+        }
+      })
+      .catch(e => {
+        console.log("Oops, error", e);
+
+        // 注意一定要返回 rows 和 total
+        return {
+          rows: [],
+          total: 0
+        };
+      });
+  };
 
   const showData = () => {
     refresh(null, { extra: 1 });

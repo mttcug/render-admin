@@ -441,8 +441,12 @@ export const advancedElements = [
     name: "tableModel",
     schema: {
       title: "表格",
-      type: "string",
-      widget: "tableModel"
+      type: "string", // 此处使用表格类型
+      widget: "tableModel",
+      props: {
+        tableNames: ["姓名", "年龄"],
+        config: "{{formData}}"
+      }
     },
     setting: {}
   },
@@ -980,7 +984,7 @@ export const defaultCommonSettings = {
   },
   dataSource: {
     title: "数据绑定",
-    type: "string",
+    type: "object",
     props: {
       name: "{{formData.config.title}}"
     },
