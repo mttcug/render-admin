@@ -6,6 +6,7 @@ import {
 } from "@ant-design/icons";
 import { Space, Card, Skeleton } from "antd";
 import "./index.scss";
+import img404 from "@/assets/images/404.jpg";
 
 const Applications = props => {
   const [applications, setApplications] = useState([]);
@@ -23,10 +24,10 @@ const Applications = props => {
   };
 
   return (
-    <>
-      <Space>
-        {applications &&
-          applications.map(app => {
+    <div className="application-container">
+      {applications.length ? (
+        <Space>
+          {applications.map(app => {
             return (
               <div key={app.appId} className="site-card-border-less-wrapper">
                 <Card
@@ -58,8 +59,13 @@ const Applications = props => {
               </div>
             );
           })}
-      </Space>
-    </>
+        </Space>
+      ) : (
+        <div style={{ textAlign: "center", marginTop: "5rem" }}>
+          <img src={img404} alt="" />
+        </div>
+      )}
+    </div>
   );
 };
 

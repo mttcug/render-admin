@@ -437,6 +437,16 @@ export const advancedElements = [
     setting: {}
   },
   {
+    text: "表格",
+    name: "tableModel",
+    schema: {
+      title: "表格",
+      type: "string",
+      widget: "tableModel"
+    },
+    setting: {}
+  },
+  {
     text: "颜色选择",
     name: "color",
     schema: {
