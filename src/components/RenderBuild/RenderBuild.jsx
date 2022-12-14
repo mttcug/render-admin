@@ -6,7 +6,12 @@ import {
   defaultCommonSettings,
   globalSettings
 } from "./settings/index";
-import { DataSource, UploadImg, TableModel } from "./widgets/index";
+import {
+  DataSource,
+  UploadImg,
+  TableModel,
+  SimpleTable
+} from "./widgets/index";
 import { getUrlParams } from "@/assets/utils/index.js";
 import "./index.scss";
 
@@ -86,13 +91,15 @@ const RenderBuild = props => {
   const widgets = {
     dataSource: DataSource,
     uploadImg: UploadImg,
-    tableModel: TableModel
+    tableModel: TableModel,
+    simpleTable: SimpleTable
   };
   // 组件映射
   const mappings = {
     dataSource: "dataSource",
     uploadImg: "uploadImg",
-    tableModel: "tableModel"
+    tableModel: "tableModel",
+    simpleTable: "simpleTable"
   };
 
   // 配置canvas上的保存按钮

@@ -38,6 +38,7 @@ const AppInfomation = props => {
           <Form.Item
             label="应用名称"
             name="appName"
+            colon={false}
             rules={[
               {
                 required: true,
@@ -45,12 +46,13 @@ const AppInfomation = props => {
               }
             ]}
           >
-            <Input />
+            <Input size={"large"} />
           </Form.Item>
 
           <Form.Item
             label="应用id"
             name="appId"
+            colon={false}
             rules={[
               {
                 required: true,
@@ -58,12 +60,13 @@ const AppInfomation = props => {
               }
             ]}
           >
-            <Input />
+            <Input size={"large"} />
           </Form.Item>
 
           <Form.Item
             label="创建人"
             name="creator"
+            colon={false}
             rules={[
               {
                 required: true,
@@ -71,12 +74,13 @@ const AppInfomation = props => {
               }
             ]}
           >
-            <Input />
+            <Input size={"large"} />
           </Form.Item>
 
           <Form.Item
             label="应用描述"
             name="desc"
+            colon={false}
             rules={[
               {
                 required: false,
@@ -88,12 +92,13 @@ const AppInfomation = props => {
           </Form.Item>
 
           <Form.Item
+            colon={false}
             wrapperCol={{
               offset: 8,
               span: 16
             }}
           >
-            <Button type="primary" htmlType="submit">
+            <Button size={"large"} type="primary" htmlType="submit">
               创建应用
             </Button>
           </Form.Item>

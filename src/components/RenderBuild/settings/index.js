@@ -437,6 +437,19 @@ export const advancedElements = [
     setting: {}
   },
   {
+    text: "简单表格",
+    name: "simpleTable",
+    schema: {
+      title: "简单表格",
+      type: "string", // 此处使用表格类型
+      widget: "simpleTable",
+      props: {
+        tableNames: ["姓名", "年龄"]
+      }
+    },
+    setting: {}
+  },
+  {
     text: "表格",
     name: "tableModel",
     schema: {

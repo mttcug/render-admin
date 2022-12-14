@@ -9,14 +9,10 @@ const AppInfomation = loadable(() =>
   import(/* webpackChunkName: 'AppInfomation' */ "@/views/CreateApp/AppInfo")
 );
 const AppBuild = loadable(() =>
-  import(
-    /* webpackChunkName: 'AppBuild' */ "@/views/CreateApp/AppContent/AppBuild"
-  )
+  import(/* webpackChunkName: 'AppBuild' */ "@/views/CreateApp/AppBuild")
 );
 const AppContent = loadable(() =>
-  import(
-    /* webpackChunkName: 'AppContent' */ "@/views/CreateApp/AppContent/AppContent"
-  )
+  import(/* webpackChunkName: 'AppContent' */ "@/views/CreateApp/AppContent")
 );
 const Applications = loadable(() =>
   import(/* webpackChunkName: 'Applications' */ "@/views/Apps/Applications")

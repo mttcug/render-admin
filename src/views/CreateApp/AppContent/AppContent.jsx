@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getUrlParams } from "@/assets/utils/index.js";
-import { Button } from "antd";
+import { Button, Empty } from "antd";
 import "./index.scss";
 import RenderForm from "@/components/RenderForm";
 
@@ -28,7 +28,7 @@ const AppContent = props => {
     <div className="app-content-container">
       <div className="content">
         <p className="app-title">{appInfo.appName}</p>
-        <RenderForm schema={schema} />
+        {schema ? <RenderForm schema={schema} /> : <Empty />}
         <Button className="submit" type="primary">
           提交
         </Button>

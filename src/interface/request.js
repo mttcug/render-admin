@@ -2,7 +2,7 @@ import { extend } from "umi-request";
 
 let extendParam = {
   prefix: "/api",
-  timeout: 1000,
+  timeout: 5000,
   headers: {
     "Content-Type": "multipart/form-data"
   },
@@ -26,14 +26,14 @@ const umiRequest = param => {
   if (_method === "get") {
     return request
       .get(url, { params })
-      .then(res => (res.success && res.result) || {})
+      .then(res => (res && res.success && res.result) || {})
       .catch(err => err);
   }
   // post 请求
   if (_method === "post") {
     return request
       .post(url, { data })
-      .then(res => (res.success && res.result) || {})
+      .then(res => (res && res.success && res.result) || {})
       .catch(err => err);
   }
 };

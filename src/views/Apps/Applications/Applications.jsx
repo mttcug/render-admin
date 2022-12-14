@@ -4,11 +4,12 @@ import {
   DeleteOutlined,
   FileDoneOutlined
 } from "@ant-design/icons";
-import { Space, Card, Skeleton } from "antd";
+import { Space, Card, Skeleton, Avatar } from "antd";
 import "./index.scss";
 import img404 from "@/assets/images/404.jpg";
 
 const Applications = props => {
+  const { Meta } = Card;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,8 +26,14 @@ const Applications = props => {
         return (
           <div key={app.appId} className="site-card-border-less-wrapper">
             <Card
-              title={app.appName}
               style={{ width: 300, marginTop: 16 }}
+              cover={
+                <img
+                  alt="example"
+                  src="https://qcloudimg.tencent-cloud.cn/raw/297010834f5c77317a1ec0f9ea865031.png"
+                />
+              }
+              hoverable={true}
               actions={[
                 <FileDoneOutlined
                   onClick={() => {
@@ -42,11 +49,17 @@ const Applications = props => {
                 <DeleteOutlined />
               ]}
             >
-              <Skeleton loading={loading} avatar active>
+              {/* <Skeleton loading={loading} avatar active>
                 <p>应用Id：{app.appId}</p>
                 <p>创建人：{app.creator}</p>
                 <p>应用简介：{app.desc}</p>
-              </Skeleton>
+              </Skeleton> */}
+
+              <Meta
+                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                title={app.appId}
+                description={app.desc}
+              />
             </Card>
           </div>
         );

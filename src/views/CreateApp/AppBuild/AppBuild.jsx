@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getUrlParams } from "@/assets/utils/index.js";
-import "./index.scss";
 import RenderBuild from "@/components/RenderBuild";
 
 const AppBuild = props => {

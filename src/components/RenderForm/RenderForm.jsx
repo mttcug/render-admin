@@ -3,7 +3,8 @@ import Form, { useForm } from "form-render";
 import {
   DataSource,
   UploadImg,
-  TableModel
+  TableModel,
+  SimpleTable
 } from "../RenderBuild/widgets/index";
 
 const RenderForm = props => {
@@ -21,7 +22,8 @@ const RenderForm = props => {
   const widgets = {
     dataSource: DataSource,
     uploadImg: UploadImg,
-    tableModel: TableModel
+    tableModel: TableModel,
+    simpleTable: SimpleTable
   };
 
   return (

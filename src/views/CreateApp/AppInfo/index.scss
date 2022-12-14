@@ -6,10 +6,11 @@
   justify-content: center;
   align-items: center;
   padding: 3rem;
+  // background-image: url('https://cloudcache.tencentcs.com/qcloud/tea/app/lcap.13272cd2e356f84a8f1e0cf755ff8b20.png');
   .create-info {
     width: 60rem;
-    box-shadow: 1px 1px 15px 0px lightgrey;
-    border-radius: 2rem;
+    box-shadow: 1px 1px 15px 0px #ececec;
+    border-radius: 1rem;
     padding: 3rem;
     p {
       text-align: center;

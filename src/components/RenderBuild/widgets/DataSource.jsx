@@ -16,7 +16,6 @@ const DataSource = props => {
 
   const change = value => {
     const target = dataSource.find(item => item.value === value);
-    console.log(`selected ${value}`, target);
     onChange(target);
   };
 

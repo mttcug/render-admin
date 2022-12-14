@@ -3,6 +3,8 @@ import { Search, Table, useTable, withTable } from "table-render";
 import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, message, Space, Tag, Tooltip } from "antd";
 import request from "umi-request";
+import { tableDataApi } from "@/interface/index.js";
+import umiRequest from "@/interface/request";
 
 const schema = {
   type: "object",
@@ -116,11 +118,11 @@ const TableModel = props => {
   // 请求数据集数据填充表格
   const searchApi = (params, sorter) => {
     console.group(sorter);
-    return request
-      .get(
-        "https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic",
-        { params }
-      )
+    return umiRequest({
+      method: "get",
+      url: tableDataApi,
+      params
+    })
       .then(res => {
         console.log("-------99999:", res);
         if (res && res.data) {
