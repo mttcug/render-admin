@@ -999,9 +999,7 @@ export const defaultCommonSettings = {
   dataSource: {
     title: "数据绑定",
     type: "object",
-    props: {
-      name: "{{formData.config.title}}"
-    },
+    props: {},
     widget: "dataSource"
   },
   bind: {

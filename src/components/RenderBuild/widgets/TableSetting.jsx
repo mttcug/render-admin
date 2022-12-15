@@ -26,6 +26,7 @@ const TableSetting = props => {
 
   const settingChange = () => {};
 
+  // 是否需要显示搜索框
   const searchChange = value => {
     const {
       target: { checked }
@@ -36,7 +37,12 @@ const TableSetting = props => {
     });
   };
 
+  // 搜索框的依赖是什么
   const searchAliasChange = value => {
+    if (value && value.length > 3) {
+      setSearchAlias(value.slice(0, 3));
+      return;
+    }
     onChange({
       needSearch: true,
       searchAlias: value
@@ -46,12 +52,13 @@ const TableSetting = props => {
   return (
     <Collapse defaultActiveKey={["1"]} onChange={settingChange}>
       <Panel header="配置" key="1">
-        <div>
+        <div className="table-setting-search-need">
           是否需要搜索框：
           <Checkbox checked={needSearch} onChange={searchChange}>
             需要
           </Checkbox>
         </div>
+        <br />
         {needSearch ? (
           <div>
             搜索框字段：

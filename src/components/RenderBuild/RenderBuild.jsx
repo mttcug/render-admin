@@ -53,7 +53,7 @@ const RenderBuild = props => {
   useEffect(() => {
     let unMount = false;
     if (!unMount) {
-      setSchema(schema);
+      setSchema(props.schema);
       // genRef.current.setValue(props.schema);
     }
     return () => {

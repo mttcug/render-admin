@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Search, Table, useTable, withTable } from "table-render";
-import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, message, Space, Tag, Tooltip } from "antd";
-import { tableDataApi } from "@/interface/index.js";
+import { message, Space } from "antd";
 import umiRequest from "@/interface/request";
 
 const TableModel = props => {
   const { onChange, schema = {} } = props;
   const { dataSource = "", tableConfig = {} } = schema;
   const { needSearch, searchAlias } = tableConfig;
+  // 根据数据源， 并根据数据源提供的接口名称 请求数据
+  const { data = [], value, label, url = "" } = dataSource;
+
+  const { refresh } = useTable();
 
   // 配置完全透传antd table
   let columns = [];
@@ -20,7 +22,6 @@ const TableModel = props => {
   };
 
   // 选择数据源
-  console.log("-----iiiii:,", props);
   if (dataSource) {
     const btns = {
       title: "操作",
@@ -47,21 +48,19 @@ const TableModel = props => {
         </Space>
       )
     };
-    // 根据数据源， 并根据数据源提供的接口名称 请求数据
-    const { data } = dataSource;
     columns = data.map(item => {
-      const { value, label, type } = item;
+      const { value: _value, label: _label, type: _type } = item;
       return {
-        title: value,
-        dataIndex: label,
-        valueType: type,
+        title: _value,
+        dataIndex: _label,
+        valueType: _type,
         width: "20%"
       };
     });
     columns.push(btns);
     searchAlias &&
-      searchAlias.map(_value => {
-        const target = data.find(item => item.value === _value) || {};
+      searchAlias.map(alias => {
+        const target = data.find(item => item.value === alias) || {};
         target.label &&
           (_schema.properties[target.label] = {
             title: target.value,
@@ -69,21 +68,17 @@ const TableModel = props => {
             width: "20%"
           });
       });
-    console.log("------_schema:", _schema);
   }
-
-  const { refresh } = useTable();
 
   // 请求数据集数据填充表格
   const searchApi = (params, sorter) => {
-    console.group(sorter);
+    if (!url) return {};
     return umiRequest({
       method: "get",
-      url: tableDataApi,
+      url: url,
       params
     })
       .then(res => {
-        console.log("-------99999:", res);
         if (res && res.data) {
           return {
             rows: [...res.data, { money: null }],
@@ -106,15 +101,16 @@ const TableModel = props => {
     refresh(null, { extra: 1 });
   };
 
-  useEffect(() => {}, []);
-
   return (
     <div>
       <Search
         hidden={!needSearch}
         schema={_schema}
         displayType="row"
-        api={searchApi}
+        api={((params, sorter) => {
+          console.log("-----^^^^^^");
+          return searchApi;
+        })()}
       />
       <Table
         pagination={{ pageSize: 4 }}

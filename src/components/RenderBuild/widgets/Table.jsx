@@ -35,20 +35,20 @@ const SimpleTable = props => {
 
     const getData = async () => {
       const result = await getTableData();
-      console.log("-------getTableData:", result);
       if (result && Object.keys(result).length && !unMounted) {
         setTableData(result);
       }
     };
 
+    console.log("-------getTableData:", dataSource);
     const _columns = _data.map(item => {
       return {
-        title: item.name,
+        title: item.value,
         dataIndex: item.label,
         key: item.label
       };
     });
-    _columns.push(action);
+    _data.length > 0 && _columns.push(action);
     setCloumns(_columns);
     getData();
     return () => {

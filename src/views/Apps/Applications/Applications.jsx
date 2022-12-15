@@ -49,12 +49,6 @@ const Applications = props => {
                 <DeleteOutlined />
               ]}
             >
-              {/* <Skeleton loading={loading} avatar active>
-                <p>应用Id：{app.appId}</p>
-                <p>创建人：{app.creator}</p>
-                <p>应用简介：{app.desc}</p>
-              </Skeleton> */}
-
               <Meta
                 avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
                 title={app.appId}

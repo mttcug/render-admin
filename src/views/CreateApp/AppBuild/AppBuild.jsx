@@ -36,7 +36,7 @@ const AppBuild = props => {
     return () => {
       unMount = true;
     };
-  }, []);
+  }, [appId]);
 
   const saveAppSchema = schema => {
     const schemasCache = JSON.parse(sessionStorage.getItem("schemas") || "{}");
@@ -50,7 +50,6 @@ const AppBuild = props => {
     const { properties = {} } = schema;
     const { $id = "", dataSource = {} } = curSchema;
     const id = String($id).replace("#/", "");
-    console.log("------&&&&&&", schema, dataSource);
     // 判断dataSource变化
     if (
       properties[id] &&
@@ -67,7 +66,6 @@ const AppBuild = props => {
 
   // 表单设计器中组件被选中
   const onCanvasSelect = (schema = {}) => {
-    console.log("-------AAAAAAA");
     setCurSchema(schema);
   };
 
