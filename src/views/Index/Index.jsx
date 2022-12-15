@@ -1,140 +1,123 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { Layout, Row, Avatar, Card, Image, Space } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
-  SettingOutlined,
+  FileDoneOutlined,
   PlusCircleOutlined
 } from "@ant-design/icons";
 
 import screenfull from "screenfull";
 import "@/style/view-style/index.scss";
+import { createTypes, applicationsTypeImg } from "./config.js";
 
-const Entry = () => {
+const Entry = props => {
+  const create = url => {
+    props.history.push(url);
+  };
   return (
     <section className="create-entry">
       <p className="section-title">创建新应用</p>
       <Row className="index-header ">
-        <Space>
-          <Card
-            style={{
-              width: 300
-            }}
-            className="card"
-            hoverable={true}
-            actions={[]}
-          >
-            <div className="card-header">
-              <PlusCircleOutlined
-                style={{
-                  fontSize: 30,
-                  color: "#006eff",
-                  marginRight: 10,
-                  verticalAlign: "center"
+        <Space size={"large"}>
+          {createTypes.map(item => (
+            <Card
+              key={item.type}
+              style={{
+                width: 300
+              }}
+              className="card"
+              hoverable={true}
+              actions={[]}
+            >
+              <div
+                className="card-header"
+                onClick={() => {
+                  create(item.link);
                 }}
-              />
-              <p className="title">快速创建表单应用</p>
-            </div>
-            <div className="card-content">适用于表单信息的收集</div>
-            <Image
-              rootClassName="card-img"
-              width={150}
-              src={
-                "https://cloudcache.tencentcs.com/qcloud/tea/app/lcap.2885b7aae7fec003905dc379b73fb3d0.png"
-              }
-            />
-          </Card>
-          <Card
-            style={{
-              width: 300
-            }}
-            className="card"
-            hoverable={true}
-            actions={[]}
-          >
-            <div className="card-header">
-              <PlusCircleOutlined
-                style={{
-                  fontSize: 30,
-                  color: "#006eff",
-                  marginRight: 10,
-                  verticalAlign: "center"
-                }}
-              />
-              <p className="title">快速创建表单应用</p>
-            </div>
-            <div className="card-content">适用于表单信息的收集</div>
-            <Image
-              rootClassName="card-img"
-              width={150}
-              src={
-                "https://cloudcache.tencentcs.com/qcloud/tea/app/lcap.a9622ecd944e03b7900d8206fceefb89.png"
-              }
-            />
-          </Card>
+              >
+                <PlusCircleOutlined
+                  style={{
+                    fontSize: 30,
+                    color: "#006eff",
+                    marginRight: 10,
+                    verticalAlign: "center"
+                  }}
+                />
+                <p className="title">{item.title}</p>
+              </div>
+              <div className="card-content">{item.desc}</div>
+              <Image rootClassName="card-img" width={150} src={item.pic} />
+            </Card>
+          ))}
         </Space>
       </Row>
     </section>
   );
 };
 
-const AppList = () => {
+const AppList = props => {
   const { Meta } = Card;
-  return (
+  const [applications, setApplications] = useState([]);
+
+  useEffect(() => {
+    // 获取App信息
+    const apps = JSON.parse(sessionStorage.getItem("app") || "[]");
+    setApplications(apps);
+  }, []);
+
+  const linkTo = url => {
+    props.history.replace(url);
+  };
+
+  return applications.length ? (
     <section className="application-list">
       <p className="section-title">我的应用</p>
       <Row className="index-header ">
-        <Space>
-          <Card
-            style={{
-              width: 300
-            }}
-            cover={
-              <img
-                alt="example"
-                src="https://qcloudimg.tencent-cloud.cn/raw/297010834f5c77317a1ec0f9ea865031.png"
+        <Space size={"large"}>
+          {applications.map(app => (
+            <Card
+              key={app.appId}
+              style={{
+                width: 300
+              }}
+              cover={
+                <img
+                  alt="example"
+                  src={
+                    applicationsTypeImg[
+                      (app.appType && app.appType.toLocaleUpperCase()) || "FORM"
+                    ]
+                  }
+                />
+              }
+              hoverable={true}
+              actions={[
+                <FileDoneOutlined
+                  onClick={() => {
+                    linkTo(`/createApp/AppContent?appId=${app.appId}`);
+                  }}
+                />,
+                <EditOutlined
+                  key="edit"
+                  onClick={() => {
+                    linkTo(`/createApp/appBuild?appId=${app.appId}`);
+                  }}
+                />,
+                <DeleteOutlined />
+              ]}
+            >
+              <Meta
+                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                title={app.appName}
+                description={app.desc}
               />
-            }
-            hoverable={true}
-            actions={[
-              <SettingOutlined key="setting" />,
-              <EditOutlined key="edit" />,
-              <DeleteOutlined key="ellipsis" />
-            ]}
-          >
-            <Meta
-              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-              title="Card title"
-              description="This is the description"
-            />
-          </Card>
-          <Card
-            style={{
-              width: 300
-            }}
-            cover={
-              <img
-                alt="example"
-                src="https://qcloudimg.tencent-cloud.cn/raw/2f027bc952bcadcc3b4f17e20690a913.png"
-              />
-            }
-            hoverable={true}
-            actions={[
-              <SettingOutlined key="setting" />,
-              <EditOutlined key="edit" />,
-              <DeleteOutlined key="ellipsis" />
-            ]}
-          >
-            <Meta
-              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-              title="Card title"
-              description="This is the description"
-            />
-          </Card>
+            </Card>
+          ))}
         </Space>
       </Row>
     </section>
-  );
+  ) : null;
 };
 
 class Index extends Component {
@@ -146,8 +129,8 @@ class Index extends Component {
   render() {
     return (
       <Layout className="index animated fadeIn">
-        <Entry />
-        <AppList />
+        <Entry {...this.props} />
+        <AppList {...this.props} />
       </Layout>
     );
   }

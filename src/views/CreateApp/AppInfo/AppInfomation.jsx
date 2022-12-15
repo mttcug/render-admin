@@ -1,9 +1,15 @@
 import React from "react";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Select } from "antd";
+import { applicationTypes } from "@/assets/utils/config.js";
+import { useLocation } from "react-router-dom";
+import { getUrlParams } from "@/assets/utils/index.js";
 import "./index.scss";
 
 const AppInfomation = props => {
   const { TextArea } = Input;
+  const { search } = useLocation();
+  // 创建应用的应用类型
+  const appType = getUrlParams("appType", search);
 
   // 保存创建的Application信息， 并跳转表单信息构建页面
   const save = values => {
@@ -36,6 +42,25 @@ const AppInfomation = props => {
           autoComplete="off"
         >
           <Form.Item
+            label="应用类型"
+            name="appType"
+            colon={false}
+            initialValue={appType}
+            rules={[
+              {
+                required: true
+              }
+            ]}
+          >
+            <Select
+              size="large"
+              placeholder="请选择应用类型"
+              disabled={!!appType}
+              style={{ width: "100%" }}
+              options={applicationTypes}
+            />
+          </Form.Item>
+          <Form.Item
             label="应用名称"
             name="appName"
             colon={false}
@@ -46,7 +71,7 @@ const AppInfomation = props => {
               }
             ]}
           >
-            <Input size={"large"} />
+            <Input size={"large"} placeholder="请输入应用名称" />
           </Form.Item>
 
           <Form.Item
@@ -60,7 +85,7 @@ const AppInfomation = props => {
               }
             ]}
           >
-            <Input size={"large"} />
+            <Input size={"large"} placeholder="请输入应用id" />
           </Form.Item>
 
           <Form.Item
@@ -74,7 +99,7 @@ const AppInfomation = props => {
               }
             ]}
           >
-            <Input size={"large"} />
+            <Input size={"large"} placeholder="请输入创建人" />
           </Form.Item>
 
           <Form.Item

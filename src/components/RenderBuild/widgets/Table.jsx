@@ -1,18 +1,7 @@
-import { Space, Table, Tag } from "antd";
+import { Space, Table, Tag, Modal } from "antd";
 import React, { useState, useEffect } from "react";
 import { tableDataApi } from "@/interface/index.js";
 import umiRequest from "@/interface/request";
-
-const action = {
-  title: "Action",
-  key: "action",
-  render: (_, record) => (
-    <Space size="middle">
-      <a>Invite {record.name}</a>
-      <a>Delete</a>
-    </Space>
-  )
-};
 
 const SimpleTable = props => {
   const { onChange, schema } = props;
@@ -40,7 +29,6 @@ const SimpleTable = props => {
       }
     };
 
-    console.log("-------getTableData:", dataSource);
     const _columns = _data.map(item => {
       return {
         title: item.value,
@@ -56,6 +44,44 @@ const SimpleTable = props => {
     };
   }, [value]);
 
-  return <Table columns={columns} dataSource={data} />;
+  // 操作
+  const action = {
+    title: "Action",
+    key: "action",
+    render: (_, record) => (
+      <Space size="middle">
+        <a onClick={showModal}>编辑</a>
+        <a onClick={showModal}>删除</a>
+      </Space>
+    ),
+    width: "20%"
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <>
+      <Table columns={columns} dataSource={data} />
+      <Modal
+        title="Basic Modal"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
+    </>
+  );
 };
 export default SimpleTable;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Search, Table, useTable, withTable } from "table-render";
-import { message, Space } from "antd";
+import { message, Space, Modal } from "antd";
 import umiRequest from "@/interface/request";
 
 const TableModel = props => {
