@@ -3,29 +3,17 @@ import React, { useState, useEffect } from "react";
 import { tableDataApi } from "@/interface/index.js";
 import umiRequest from "@/interface/request";
 
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"]
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"]
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"]
-  }
-];
+const action = {
+  title: "Action",
+  key: "action",
+  render: (_, record) => (
+    <Space size="middle">
+      <a>Invite {record.name}</a>
+      <a>Delete</a>
+    </Space>
+  )
+};
+
 const SimpleTable = props => {
   const { onChange, schema } = props;
   const { dataSource = {} } = schema;
@@ -41,6 +29,7 @@ const SimpleTable = props => {
     });
   };
 
+  // 每当dataSource变化重新请求
   useEffect(() => {
     let unMounted = false;
 
@@ -59,6 +48,7 @@ const SimpleTable = props => {
         key: item.label
       };
     });
+    _columns.push(action);
     setCloumns(_columns);
     getData();
     return () => {

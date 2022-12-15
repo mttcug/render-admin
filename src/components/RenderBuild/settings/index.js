@@ -443,9 +443,7 @@ export const advancedElements = [
       title: "简单表格",
       type: "string", // 此处使用表格类型
       widget: "simpleTable",
-      props: {
-        tableNames: ["姓名", "年龄"]
-      }
+      props: {}
     },
     setting: {}
   },
@@ -456,12 +454,15 @@ export const advancedElements = [
       title: "表格",
       type: "string", // 此处使用表格类型
       widget: "tableModel",
-      props: {
-        tableNames: ["姓名", "年龄"],
-        config: "{{formData}}"
-      }
+      props: {}
     },
-    setting: {}
+    setting: {
+      tableConfig: {
+        title: "",
+        type: "object",
+        widget: "tableSetting"
+      }
+    }
   },
   {
     text: "颜色选择",

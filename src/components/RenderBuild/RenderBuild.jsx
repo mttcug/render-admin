@@ -10,7 +10,8 @@ import {
   DataSource,
   UploadImg,
   TableModel,
-  SimpleTable
+  SimpleTable,
+  TableSetting
 } from "./widgets/index";
 import { getUrlParams } from "@/assets/utils/index.js";
 import "./index.scss";
@@ -56,8 +57,14 @@ const RenderBuild = props => {
   const [schema, setSchema] = useState(props.schema || defaultValue);
   // schema变化时，重新设置setValue
   useEffect(() => {
-    setSchema(schema);
-    genRef.current.setValue(props.schema);
+    let unMount = false;
+    if (!unMount) {
+      setSchema(schema);
+      genRef.current.setValue(props.schema);
+    }
+    return () => {
+      unMount = true;
+    };
   }, [props.schema]);
 
   // 获取生成器最后的结果
@@ -92,14 +99,16 @@ const RenderBuild = props => {
     dataSource: DataSource,
     uploadImg: UploadImg,
     tableModel: TableModel,
-    simpleTable: SimpleTable
+    simpleTable: SimpleTable,
+    tableSetting: TableSetting
   };
   // 组件映射
   const mappings = {
     dataSource: "dataSource",
     uploadImg: "uploadImg",
     tableModel: "tableModel",
-    simpleTable: "simpleTable"
+    simpleTable: "simpleTable",
+    tableSetting: "tableSetting"
   };
 
   // 配置canvas上的保存按钮

@@ -2,45 +2,25 @@ import React, { useEffect } from "react";
 import { Search, Table, useTable, withTable } from "table-render";
 import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, message, Space, Tag, Tooltip } from "antd";
-import request from "umi-request";
 import { tableDataApi } from "@/interface/index.js";
 import umiRequest from "@/interface/request";
 
-const schema = {
-  type: "object",
-  properties: {
-    state: {
-      title: "酒店状态",
-      type: "string",
-      enum: ["open", "closed"],
-      enumNames: ["营业中", "已打烊"],
-      width: "25%",
-      widget: "select"
-    },
-    labels: {
-      title: "酒店星级",
-      type: "string",
-      width: "25%"
-    },
-    created_at: {
-      title: "成立时间",
-      type: "string",
-      format: "date",
-      width: "25%"
-    }
-  },
-  labelWidth: 80
-};
-
 const TableModel = props => {
-  const { onChange, schema } = props;
-  const { dataSource = "" } = schema;
+  const { onChange, schema = {} } = props;
+  const { dataSource = "", tableConfig = {} } = schema;
+  const { needSearch, searchAlias } = tableConfig;
 
   // 配置完全透传antd table
   let columns = [];
 
+  let _schema = {
+    type: "object",
+    properties: {},
+    labelWidth: 80
+  };
+
   // 选择数据源
-  console.log("-----iiiii:,", dataSource);
+  console.log("-----iiiii:,", props);
   if (dataSource) {
     const btns = {
       title: "操作",
@@ -68,49 +48,28 @@ const TableModel = props => {
       )
     };
     // 根据数据源， 并根据数据源提供的接口名称 请求数据
-    columns = [
-      {
-        title: "应用名称",
-        dataIndex: "title",
-        valueType: "text",
+    const { data } = dataSource;
+    columns = data.map(item => {
+      const { value, label, type } = item;
+      return {
+        title: value,
+        dataIndex: label,
+        valueType: type,
         width: "20%"
-      },
-      {
-        title: "应用Id",
-        dataIndex: "address",
-        ellipsis: true,
-        copyable: true,
-        valueType: "text",
-        width: "25%"
-      },
-      {
-        title: "应用状态",
-        enum: {
-          open: "营业中",
-          closed: "已打烊"
-        },
-        dataIndex: "state"
-      },
-      {
-        title: "应用星级",
-        dataIndex: "labels"
-      },
-
-      {
-        title: "应用GMV",
-        key: "money",
-        sorter: true,
-        dataIndex: "money",
-        valueType: "money"
-      },
-      {
-        title: "成立时间",
-        key: "created_at",
-        dataIndex: "created_at",
-        valueType: "date"
-      }
-    ];
+      };
+    });
     columns.push(btns);
+    searchAlias &&
+      searchAlias.map(_value => {
+        const target = data.find(item => item.value === _value) || {};
+        console.log("-------target:", target, _schema);
+        target.label &&
+          (_schema.properties[target.label] = {
+            title: target.value,
+            type: target.type
+          });
+      });
+    console.log("------_schema:", _schema);
   }
 
   const { refresh } = useTable();
@@ -147,13 +106,11 @@ const TableModel = props => {
     refresh(null, { extra: 1 });
   };
 
-  useEffect(() => {
-    onChange("");
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div>
-      <Search hidden schema={schema} displayType="row" api={searchApi} />
+      <Search schema={_schema} displayType="row" api={searchApi} />
       <Table
         pagination={{ pageSize: 4 }}
         columns={columns}

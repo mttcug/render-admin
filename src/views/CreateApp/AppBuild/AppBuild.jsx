@@ -24,10 +24,18 @@ const AppBuild = props => {
   const [curSchema, setCurSchema] = useState({});
 
   useEffect(() => {
-    const schemasCache = JSON.parse(sessionStorage.getItem("schemas") || "{}");
-    if (schemasCache[appId]) {
-      setSchema(schemasCache[appId]);
+    let unMount = false;
+    if (!unMount) {
+      const schemasCache = JSON.parse(
+        sessionStorage.getItem("schemas") || "{}"
+      );
+      if (schemasCache[appId]) {
+        setSchema(schemasCache[appId]);
+      }
     }
+    return () => {
+      unMount = true;
+    };
   }, []);
 
   const saveAppSchema = schema => {
@@ -59,6 +67,7 @@ const AppBuild = props => {
 
   // 表单设计器中组件被选中
   const onCanvasSelect = (schema = {}) => {
+    console.log("-------AAAAAAA");
     setCurSchema(schema);
   };
 
