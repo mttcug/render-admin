@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Form, { useForm } from "form-render";
-import {
-  DataSource,
-  UploadImg,
-  TableModel,
-  SimpleTable
-} from "../RenderBuild/widgets/index";
+import { widgets } from "@/components/RenderBuild/widgets/index";
 
 const RenderForm = props => {
   const [schema, setSchema] = useState({});
@@ -17,13 +12,6 @@ const RenderForm = props => {
 
   const onFinish = (formData, errors) => {
     console.log("formData:", formData, "errors", errors);
-  };
-
-  const widgets = {
-    dataSource: DataSource,
-    uploadImg: UploadImg,
-    tableModel: TableModel,
-    simpleTable: SimpleTable
   };
 
   return (

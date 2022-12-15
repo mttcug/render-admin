@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Collapse, Checkbox } from "antd";
+import { Collapse, Checkbox, Tag } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 /**
  * 从数据库绑定数据
@@ -10,11 +11,18 @@ const TableSetting = props => {
   // 这里的onChange很重要， 把最终的值获取到穿出去，schema才能获取到
   const { onChange, addons = {} } = props;
   const { formData = {} } = addons;
-  const dataSource = formData.dataSource || {};
+  const { dataSource = {}, tableConfig = {} } = formData;
   const { data = [], value = "", label = "", url = "" } = dataSource;
 
-  const [options, setOptions] = useState([]);
   const [needSearch, setNeedSearch] = useState(false);
+  const [searchAlias, setSearchAlias] = useState([]);
+
+  // 回填设置的值
+  useEffect(() => {
+    const { needSearch, searchAlias } = tableConfig;
+    setNeedSearch(needSearch);
+    setSearchAlias(searchAlias);
+  }, []);
 
   const settingChange = () => {};
 
@@ -26,7 +34,6 @@ const TableSetting = props => {
     onChange({
       needSearch: !!checked
     });
-    console.log("---------ccccc:", checked);
   };
 
   const searchAliasChange = value => {
@@ -34,31 +41,26 @@ const TableSetting = props => {
       needSearch: true,
       searchAlias: value
     });
-    console.log("---------ddddddd:", value);
   };
-
-  useEffect(() => {
-    let unMount = false;
-    if (!unMount) {
-      setOptions(data);
-    }
-    return () => {
-      unMount = true;
-    };
-  }, []);
 
   return (
     <Collapse defaultActiveKey={["1"]} onChange={settingChange}>
       <Panel header="配置" key="1">
         <div>
-          是否需要搜索框：<Checkbox onChange={searchChange}>需要</Checkbox>
+          是否需要搜索框：
+          <Checkbox checked={needSearch} onChange={searchChange}>
+            需要
+          </Checkbox>
         </div>
         {needSearch ? (
           <div>
             搜索框字段：
+            <Tag icon={<ExclamationCircleOutlined />} color="warning">
+              最多可选三个
+            </Tag>
             <Checkbox.Group
-              options={options}
-              defaultValue={[]}
+              options={data}
+              defaultValue={searchAlias}
               onChange={searchAliasChange}
             />
           </div>

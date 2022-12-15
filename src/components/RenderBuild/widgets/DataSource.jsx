@@ -10,11 +10,17 @@ import umiRequest from "@/interface/request";
  */
 const DataSource = props => {
   const { Option } = Select;
+
   // 这里的onChange很重要， 把最终的值获取到穿出去，schema才能获取到
-  const { onChange } = props;
+  const { onChange, addons = {} } = props;
+  const { formData = {} } = addons;
   const [dataSource, setDataSource] = useState([]);
 
+  // 从addons中获取选中的值进行回填
+  const defaultValue = formData.dataSource && formData.dataSource.value;
+
   const change = value => {
+    // onChange将DataSource组件的值传出去作为schema.dataSource属性给canvas的组件使用
     const target = dataSource.find(item => item.value === value);
     onChange(target);
   };
@@ -23,9 +29,7 @@ const DataSource = props => {
     console.log("search:", value);
   };
 
-  /**
-   * description 获取dataSource
-   */
+  // description 获取dataSource
   const getDataSource = async () => {
     const result = await umiRequest({
       method: "get",
@@ -52,18 +56,16 @@ const DataSource = props => {
   return (
     <Select
       showSearch
-      placeholder="Select a person"
-      optionFilterProp="children"
+      placeholder="请选择数据集"
+      defaultValue={defaultValue}
       onChange={change}
       onSearch={onSearch}
-      filterOption={(input, option) =>
-        (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-      }
+      style={{ width: "100%" }}
     >
       {dataSource.map(item => (
         <Option value={item.value} key={item.label}>
           <DatabaseOutlined style={{ color: "#1890ff", marginRight: 10 }} />
-          {item.label}
+          {item.value}
         </Option>
       ))}
     </Select>

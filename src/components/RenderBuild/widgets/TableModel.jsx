@@ -62,11 +62,11 @@ const TableModel = props => {
     searchAlias &&
       searchAlias.map(_value => {
         const target = data.find(item => item.value === _value) || {};
-        console.log("-------target:", target, _schema);
         target.label &&
           (_schema.properties[target.label] = {
             title: target.value,
-            type: target.type
+            type: target.type,
+            width: "20%"
           });
       });
     console.log("------_schema:", _schema);
@@ -110,27 +110,17 @@ const TableModel = props => {
 
   return (
     <div>
-      <Search schema={_schema} displayType="row" api={searchApi} />
+      <Search
+        hidden={!needSearch}
+        schema={_schema}
+        displayType="row"
+        api={searchApi}
+      />
       <Table
         pagination={{ pageSize: 4 }}
         columns={columns}
         rowKey="id"
-        toolbarRender={() => [
-          <Button key="show" onClick={showData}>
-            查看日志
-          </Button>,
-          <Button key="out" onClick={showData}>
-            导出数据
-          </Button>,
-          <Button
-            key="primary"
-            type="primary"
-            onClick={() => alert("table-render！")}
-          >
-            <PlusOutlined />
-            创建
-          </Button>
-        ]}
+        toolbarRender={() => []}
         toolbarAction
       />
     </div>

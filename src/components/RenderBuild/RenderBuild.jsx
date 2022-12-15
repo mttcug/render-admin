@@ -6,13 +6,7 @@ import {
   defaultCommonSettings,
   globalSettings
 } from "./settings/index";
-import {
-  DataSource,
-  UploadImg,
-  TableModel,
-  SimpleTable,
-  TableSetting
-} from "./widgets/index";
+import { widgets, mappings } from "./widgets/index";
 import { getUrlParams } from "@/assets/utils/index.js";
 import "./index.scss";
 
@@ -60,7 +54,7 @@ const RenderBuild = props => {
     let unMount = false;
     if (!unMount) {
       setSchema(schema);
-      genRef.current.setValue(props.schema);
+      // genRef.current.setValue(props.schema);
     }
     return () => {
       unMount = true;
@@ -92,23 +86,6 @@ const RenderBuild = props => {
   // canvas选中组件
   const onCanvasSelect = schema => {
     props.onCanvasSelect(schema);
-  };
-
-  // 自定义组件
-  const widgets = {
-    dataSource: DataSource,
-    uploadImg: UploadImg,
-    tableModel: TableModel,
-    simpleTable: SimpleTable,
-    tableSetting: TableSetting
-  };
-  // 组件映射
-  const mappings = {
-    dataSource: "dataSource",
-    uploadImg: "uploadImg",
-    tableModel: "tableModel",
-    simpleTable: "simpleTable",
-    tableSetting: "tableSetting"
   };
 
   // 配置canvas上的保存按钮
