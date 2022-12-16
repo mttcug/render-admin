@@ -43,22 +43,33 @@
 │   ├── components              # 全局公共组件
 │   │   ├── CustomBreadcrumb        # 面包屑导航
 │   │   └── CustomMenu              # menu 菜单
+|   |   └── RenderBuild             # 表单设计器
+|   |   └── RenderForm             # 表单渲染
+|   |   └── RenderTable            # table渲染
 │   ├── contatiners             # 页面结构组件
 │   ├── routes                  # 路由目录
+│   ├── interface               # api 配置以及umi-request封装
 │   ├── store                   # redux 配置
 │   ├── style                   # 样式目录
 │   ├── utils                   # 工具类
 │   ├── views                   # UI 页面
+|   |   ├── Login               # 登录
+|   |   └── Index               # 首页
+|   |   └── Apps               # 应用列表页
+|   |   └── CreateAp           # 应用创建页面
 │   ├── APP.js                  # App.js
 │   └── index.js                # index.js
 ├── .prettierrc.js           # 代码规范
 ├── config-overrides.js      # antd 样式按需加载
+├── .env.sit                 # antd 测试环境process.env配置
+├── .env.dev                 # antd 本地开发环境process.env配置
+├── .env.prod                # antd 生产环境process.env配置
 ```
 
 ### 使用方法
 
 ```npm
-git clone https://github.com/ltadpoles/react-admin.git
+git clone 
 
 cd react-admin
 
@@ -72,11 +83,3 @@ yarn start
 yarn build
 
 ```
-
-### 截图
-
-![image](https://raw.githubusercontent.com/ltadpoles/react-admin/master/src/assets/images/index.jpg)
-
-![image](https://raw.githubusercontent.com/ltadpoles/react-admin/master/src/assets/images/form.jpg)
-
-![image](https://raw.githubusercontent.com/ltadpoles/react-admin/master/src/assets/images/editor.jpg)
