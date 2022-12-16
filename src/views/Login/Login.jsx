@@ -10,8 +10,6 @@ import {
 } from "antd";
 import { withRouter } from "react-router-dom";
 import { UserOutlined, UnlockOutlined } from "@ant-design/icons";
-// import axios from '@/api'
-// import { API } from '@/api/config'
 import "@/style/view-style/login.scss";
 
 class Login extends Component {

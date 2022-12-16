@@ -36,7 +36,7 @@ const DataSource = props => {
       url: dataSourceApi,
       params: {}
     });
-    return result;
+    return result.length || Object.keys(result).length ? result : [];
   };
 
   useEffect(() => {
@@ -62,12 +62,13 @@ const DataSource = props => {
       onSearch={onSearch}
       style={{ width: "100%" }}
     >
-      {dataSource.map(item => (
-        <Option value={item.value} key={item.label} label={item.label}>
-          <DatabaseOutlined style={{ color: "#1890ff", marginRight: 10 }} />
-          {item.value}
-        </Option>
-      ))}
+      {dataSource &&
+        dataSource.map(item => (
+          <Option value={item.value} key={item.label} label={item.label}>
+            <DatabaseOutlined style={{ color: "#1890ff", marginRight: 10 }} />
+            {item.value}
+          </Option>
+        ))}
     </Select>
   );
 };
