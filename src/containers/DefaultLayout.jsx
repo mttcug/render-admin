@@ -40,7 +40,7 @@ class DefaultLayout extends Component {
     let newMenu,
       auth = JSON.parse(localStorage.getItem("user")).auth;
     if (!auth) {
-      return menu;
+      return { ...menu };
     } else {
       Object.keys(menu).map(key => {
         const res = menu[key];
