@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import { getUrlParams } from "@/assets/utils/index.js";
 import { Button, Empty } from "antd";
 import "./index.scss";
-import Form, { useForm } from "form-render";
 import RenderForm from "@/components/RenderForm";
 
 const AppContent = props => {
