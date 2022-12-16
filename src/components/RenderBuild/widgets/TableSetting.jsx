@@ -12,7 +12,7 @@ const TableSetting = props => {
   const { onChange, addons = {} } = props;
   const { formData = {} } = addons;
   const { dataSource = {}, tableConfig = {} } = formData;
-  const { data = [], value = "", label = "", url = "" } = dataSource;
+  const { data = [] } = dataSource;
 
   const [needSearch, setNeedSearch] = useState(false);
   const [searchAlias, setSearchAlias] = useState([]);

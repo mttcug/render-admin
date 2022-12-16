@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Search, Table, useTable, withTable } from "table-render";
-import { message, Space, Modal } from "antd";
+import { message, Space } from "antd";
 import umiRequest from "@/interface/request";
 
 const TableModel = props => {
-  const { onChange, schema = {} } = props;
+  const { schema = {} } = props;
   const { dataSource = "", tableConfig = {} } = schema;
   const { needSearch, searchAlias } = tableConfig;
   // 根据数据源， 并根据数据源提供的接口名称 请求数据
-  const { data = [], value, label, url = "" } = dataSource;
+  const { data = [], url = "" } = dataSource;
 
   const { refresh } = useTable();
 

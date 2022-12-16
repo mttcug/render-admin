@@ -6,12 +6,8 @@
         "@ant-design/icons": "^4.8.0",
         "animate.css": "^3.7.2",
         "antd": "^4.x",
-        "axios": "^0.19.0",
-        "braft-editor": "^2.3.8",
-        "echarts": "^4.4.0",
         "form-render": "^1.14.7",
         "fr-generator": "^2.8.4",
-        "install": "^0.13.0",
         "npm": "^9.2.0",
         "nprogress": "^0.2.0",
         "react": "^16.10.1",
@@ -76,9 +72,6 @@
         "react-error-overlay": "6.0.9"
     },
     "resolutions": {
-        "react-error-overlay": "6.0.9"
-    },
-    "overrides": {
         "react-error-overlay": "6.0.9"
     }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -28,11 +28,6 @@ const Login = loadable(() =>
 );
 
 const App = () => {
-  useEffect(() => {
-    window.process = {
-      ...window.process
-    };
-  }, []);
   return (
     <Router>
       <Switch>

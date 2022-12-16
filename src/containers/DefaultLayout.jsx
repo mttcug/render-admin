@@ -59,7 +59,6 @@ class DefaultLayout extends Component {
   componentDidUpdate() {
     let { pathname } = this.props.location;
 
-    // 菜单收缩展开时 echarts 图表的自适应
     if (pathname === "/" || pathname === "/index") {
     } else {
       this.timer = null;

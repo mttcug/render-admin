@@ -4,17 +4,12 @@ import {
   DeleteOutlined,
   FileDoneOutlined
 } from "@ant-design/icons";
-import { Space, Card, Skeleton, Avatar } from "antd";
+import { Space, Card, Avatar } from "antd";
 import "./index.scss";
 import img404 from "@/assets/images/404.jpg";
 
 const Applications = props => {
   const { Meta } = Card;
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(false);
-  }, []);
 
   const linkTo = url => {
     props.history.replace(url);
