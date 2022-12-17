@@ -16,27 +16,65 @@ const { Header } = Layout;
 
 const AppHeader = props => {
   let { menuClick, avatar, menuToggle, loginOut } = props;
-  const menu = (
-    <Menu>
-      <Menu.ItemGroup title="用户设置">
-        <Menu.Divider />
-        <Menu.Item>
-          <EditOutlined />
-          个人设置
-        </Menu.Item>
-        <Menu.Item>
-          <SettingOutlined theme="filled" />
-          系统设置
-        </Menu.Item>
-      </Menu.ItemGroup>
-      <Menu.Divider />
-      <Menu.Item>
+  const items = [
+    {
+      type: "group",
+      label: "用户设置",
+      children: [
+        {
+          type: "divider",
+          dashed: false
+        },
+        {
+          label: "个人设置",
+          key: "1",
+          icon: <EditOutlined />
+        },
+        {
+          label: "系统设置",
+          key: "2",
+          icon: <SettingOutlined theme="filled" />
+        }
+      ]
+    },
+    {
+      type: "divider",
+      dashed: false
+    },
+    {
+      label: (
         <span onClick={loginOut}>
           <LogoutOutlined /> 退出登录
         </span>
-      </Menu.Item>
-    </Menu>
-  );
+      ),
+      key: "3"
+    }
+  ];
+  // const menu = (
+  //   <Menu>
+  //     <Menu.ItemGroup title="用户设置">
+  //       <Menu.Divider />
+  //       <Menu.Item>
+  //         <EditOutlined />
+  //         个人设置
+  //       </Menu.Item>
+  //       <Menu.Item>
+  //         <SettingOutlined theme="filled" />
+  //         系统设置
+  //       </Menu.Item>
+  //     </Menu.ItemGroup>
+  //     <Menu.Divider />
+  //     <Menu.Item>
+  //       <span onClick={loginOut}>
+  //         <LogoutOutlined /> 退出登录
+  //       </span>
+  //     </Menu.Item>
+  //   </Menu>
+  // )
+  const items1 = [
+    { label: "菜单项一", key: "item-1" }, // 菜单项务必填写 key
+    { label: "菜单项二", key: "item-2" }
+  ];
   return (
     <Header className="header">
       <div className="left">
@@ -67,10 +105,11 @@ const AppHeader = props => {
             >
               <BellOutlined />
             </a>
+            menu
           </Badge>
         </div>
         <div>
-          <Dropdown overlay={menu} overlayStyle={{ width: "20rem" }}>
+          <Dropdown menu={items} overlayStyle={{ width: "20rem" }}>
             <div className="ant-dropdown-link">
               <UserOutlined
                 src={avatar}

@@ -1,4 +1,21 @@
+import React from "react";
 import loadable from "@/utils/loadable";
+import { Navigate } from "react-router-dom";
+
+// 公共模块
+const DefaultLayout = loadable(() =>
+  import(/* webpackChunkName: 'default' */ "@/containers")
+);
+// 基础页面
+const View404 = loadable(() =>
+  import(/* webpackChunkName: '404' */ "@/views/Others/404")
+);
+const View500 = loadable(() =>
+  import(/* webpackChunkName: '500' */ "@/views/Others/500")
+);
+const Login = loadable(() =>
+  import(/* webpackChunkName: 'login' */ "@/views/Login")
+);
 
 const Index = loadable(() =>
   import(/* webpackChunkName: 'index' */ "@/views/Index")
@@ -36,58 +53,84 @@ const About = loadable(() =>
   import(/* webpackChunkName: 'about' */ "@/views/About")
 );
 
-const routes = [
-  { path: "/index", exact: true, name: "Index", component: Index, auth: [1] },
+// view中的路由
+const viewRoutes = [
+  { path: "/", exact: true, name: "Index", element: <Index />, auth: [1] },
   {
     path: "/createApp/appInfo",
     exact: false,
     name: "创建应用",
-    component: AppInfomation,
+    element: <AppInfomation />,
     auth: [1]
   },
   {
     path: "/createApp/appBuild",
     exact: false,
     name: "应用搭建",
-    component: AppBuild,
+    element: <AppBuild />,
     auth: [1]
   },
   {
     path: "/createApp/AppContent",
     exact: false,
     name: "应用内容",
-    component: AppContent,
+    element: <AppContent />,
     auth: [1]
   },
   {
     path: "/apps/dataSource/models",
     exact: false,
     name: "数据模型",
-    component: DataSource,
+    element: <DataSource />,
     auth: [1]
   },
   {
     path: "/apps/dataSource/commonModels",
     exact: false,
     name: "通用选项集",
-    component: CommonModel,
+    element: <CommonModel />,
     auth: [1]
   },
   {
     path: "/apps/dataSource/apis",
     exact: false,
     name: "Apis",
-    component: Apis,
+    element: <Apis />,
     auth: [1]
   },
   {
     path: "/apps/applications",
     exact: false,
     name: "应用",
-    component: Applications,
+    element: <Applications />,
     auth: [1]
   },
-  { path: "/about", exact: false, name: "关于", component: About, auth: [1] }
+  { path: "/about", exact: false, name: "关于", element: <About />, auth: [1] }
 ];
 
-export default routes;
+// 基础路由
+const routes = [
+  {
+    path: "/",
+    element: <DefaultLayout />,
+    children: viewRoutes
+  },
+  {
+    path: "/login",
+    element: <Login />
+  },
+  {
+    path: "/500",
+    element: <View500 />
+  },
+  {
+    path: "/400",
+    element: <View404 />
+  },
+  {
+    path: "*",
+    element: <Navigate to="/" replace={true} />
+  }
+];
+
+export { routes, viewRoutes };

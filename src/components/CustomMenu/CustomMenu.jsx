@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Menu } from "antd";
-import { Link, withRouter, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const CustomMenu = props => {
   const { menu } = props;
@@ -11,6 +11,7 @@ const CustomMenu = props => {
   const [items, setItems] = useState([]);
 
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   // 处理 pathname
   const getOpenKeys = string => {
@@ -27,7 +28,6 @@ const CustomMenu = props => {
   useEffect(() => {
     let { home, quickStart, applications } = menu;
     const _items = [home, quickStart, applications];
-    console.log("--------AAAAA:", _items);
     setItems(_items);
   }, [menu]);
 
@@ -66,7 +66,10 @@ const CustomMenu = props => {
       theme="dark"
       defaultOpenKeys={openKeys}
       defaultSelectedKeys={selectedKeys}
-      onClick={({ key }) => this.setState({ selectedKeys: [key] })}
+      onClick={({ key }) => {
+        setSelectedKeys([key]);
+        navigate(key);
+      }}
       onOpenChange={onOpenChange}
       items={items}
     />
@@ -77,4 +80,4 @@ CustomMenu.propTypes = {
   menu: PropTypes.object.isRequired
 };
 
-export default withRouter(CustomMenu);
+export default CustomMenu;

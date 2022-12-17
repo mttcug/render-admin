@@ -6,14 +6,16 @@ import {
   FileDoneOutlined,
   PlusCircleOutlined
 } from "@ant-design/icons";
-
+import { useNavigate } from "react-router-dom";
 import screenfull from "screenfull";
 import "@/style/view-style/index.scss";
 import { createTypes, applicationsTypeImg } from "./config.js";
 
 const Entry = props => {
+  const navigate = useNavigate();
+
   const create = url => {
-    props.history.push(url);
+    navigate(url);
   };
   return (
     <section className="create-entry">
@@ -57,6 +59,7 @@ const Entry = props => {
 };
 
 const AppList = props => {
+  const navigate = useNavigate();
   const { Meta } = Card;
   const [applications, setApplications] = useState([]);
 
@@ -67,7 +70,7 @@ const AppList = props => {
   }, []);
 
   const linkTo = url => {
-    props.history.replace(url);
+    navigate(url);
   };
 
   return applications.length ? (
