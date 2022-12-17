@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getUrlParams } from "@/assets/utils/index.js";
 import RenderBuild from "@/components/RenderBuild";
 
 const AppBuild = props => {
   const { search } = useLocation();
+  const navigate = useNavigate();
 
   // 创建应用的唯一标识AppId
   const appId = getUrlParams("appId", search);
@@ -42,7 +43,7 @@ const AppBuild = props => {
     const schemasCache = JSON.parse(sessionStorage.getItem("schemas") || "{}");
     schemasCache[appId] = schema;
     sessionStorage.setItem("schemas", JSON.stringify(schemasCache));
-    props.history.push(`/createApp/AppContent?appId=${appId}`);
+    navigate(`/createApp/AppContent?appId=${appId}`);
   };
   // 监听表单设计器schema变化
   const onSchemaChange = schema => {

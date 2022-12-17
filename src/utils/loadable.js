@@ -1,24 +1,13 @@
-import React, { Component } from 'react'
-import Loadable from 'react-loadable'
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
+import React from "react";
+import { Spin } from "antd";
 
-class loadingComponent extends Component {
-    constructor(props) {
-        super(props)
-        NProgress.start()
-    }
-    componentDidMount() {
-        NProgress.done()
-    }
-    render() {
-        return <div />
-    }
-}
+const loadable = importFn => {
+  const AsyncLoadComponent = React.lazy(importFn);
+  return props => (
+    <React.Suspense fallback={<Spin />}>
+      <AsyncLoadComponent {...props} />
+    </React.Suspense>
+  );
+};
 
-export default (loader, loading = loadingComponent) => {
-    return Loadable({
-        loader,
-        loading
-    })
-}
+export default loadable;

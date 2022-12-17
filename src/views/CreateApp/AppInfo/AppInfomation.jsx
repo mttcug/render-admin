@@ -1,13 +1,14 @@
 import React from "react";
 import { Button, Form, Input, Select } from "antd";
 import { applicationTypes } from "@/assets/utils/config.js";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getUrlParams } from "@/assets/utils/index.js";
 import "./index.scss";
 
 const AppInfomation = props => {
   const { TextArea } = Input;
   const { search } = useLocation();
+  const navigate = useNavigate();
   // 创建应用的应用类型
   const appType = getUrlParams("appType", search);
 
@@ -17,7 +18,7 @@ const AppInfomation = props => {
     const apps = JSON.parse(sessionStorage.getItem("app") || "[]");
     apps.push(values);
     sessionStorage.setItem("app", JSON.stringify(apps));
-    props.history.push(`/createApp/appBuild?appId=${appId}`);
+    navigate(`/createApp/appBuild?appId=${appId}`);
   };
 
   const failed = errorInfo => {
