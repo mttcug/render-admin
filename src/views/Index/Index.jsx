@@ -20,7 +20,7 @@ const Entry = props => {
   return (
     <section className="create-entry">
       <p className="section-title">创建新应用</p>
-      <Row className="index-header ">
+      <Row className="index-header">
         <Space size={"large"}>
           {createTypes.map(item => (
             <Card
@@ -76,7 +76,7 @@ const AppList = props => {
   return applications.length ? (
     <section className="application-list">
       <p className="section-title">我的应用</p>
-      <Row className="index-header ">
+      <Row className="index-header" wrap="true">
         <Space size={"large"}>
           {applications.map(app => (
             <Card
