@@ -8,13 +8,8 @@ const TableModel = props => {
   const { dataSource = "", tableConfig = {} } = schema;
   const { needSearch, searchAlias = [] } = tableConfig;
 
-  // 搜索框的schema和表头
-  //   const [searchSchema, setSearchSchema] = useState(defaultSearchSchema)
-  //   const [columns, setColumns] = useState([])
-
   // 根据数据源， 并根据数据源提供的接口名称 请求数据
   const { data = [], url = "" } = dataSource;
-
   const { refresh } = useTable();
 
   let columns = [];
@@ -51,6 +46,8 @@ const TableModel = props => {
         </Space>
       )
     };
+
+    const columnWidth = (data.length && 100 / (data.length + 1)) || 100;
     columns =
       data &&
       data.map(item => {
@@ -59,13 +56,15 @@ const TableModel = props => {
           title: _value,
           dataIndex: _label,
           valueType: _type,
-          width: "20%"
+          width: `${columnWidth}%`
         };
       });
-    console.log("------&&&&&:", columns);
     columns.push(btns);
   }
 
+  const alignWidth =
+    (searchAlias && searchAlias.length && 100 / (searchAlias.length + 1)) ||
+    100;
   // 搜索依赖的字段
   searchAlias &&
     searchAlias.map(alias => {
@@ -74,41 +73,42 @@ const TableModel = props => {
         (searchSchema.properties[target.label] = {
           title: target.value,
           type: target.type,
-          width: "20%"
+          width: `${alignWidth}%`,
+          placeholder: `请键入${target.value}`
         });
     });
 
   // 请求数据集数据填充表格
-  const searchApi =
-    url &&
-    ((params, sorter) => {
-      console.log("-----url0", url);
-      return umiRequest({
-        method: "get",
-        url: url,
-        params
-      })
-        .then(res => {
-          const data = res;
-          console.log("-----url1", res);
-          if (data) {
-            return {
-              rows: [...data, { money: null }],
-              total: data.length
-            };
-          }
+  const searchApi = () => {
+    return (
+      url &&
+      ((params, sorter) => {
+        return umiRequest({
+          method: "get",
+          url: url,
+          params
         })
-        .catch(e => {
-          console.log("-----url2", url);
-          console.log("Oops, error", e);
+          .then(res => {
+            const data = res;
+            if (data) {
+              return {
+                rows: [...data, { money: null }],
+                total: data.length
+              };
+            }
+          })
+          .catch(e => {
+            console.log("Oops, error", e);
 
-          // 注意一定要返回 rows 和 total
-          return {
-            rows: [],
-            total: 0
-          };
-        });
-    });
+            // 注意一定要返回 rows 和 total
+            return {
+              rows: [],
+              total: 0
+            };
+          });
+      })
+    );
+  };
 
   const showData = () => {
     refresh(null, { extra: 1 });
@@ -118,14 +118,15 @@ const TableModel = props => {
     <div>
       {url ? (
         <Search
+          id={url}
           hidden={!needSearch}
           schema={searchSchema}
           displayType="row"
-          api={searchApi}
+          api={searchApi()}
         />
       ) : null}
       <Table
-        pagination={{ pageSize: 2 }}
+        pagination={{ pageSize: 3 }}
         columns={columns}
         rowKey="index"
         toolbarRender={() => []}

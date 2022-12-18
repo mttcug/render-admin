@@ -441,7 +441,7 @@ export const advancedElements = [
     name: "simpleTable",
     schema: {
       title: "简单表格",
-      type: "string", // 此处使用表格类型
+      type: "table", // 此处使用表格类型
       widget: "simpleTable",
       props: {}
     },
@@ -452,7 +452,7 @@ export const advancedElements = [
     name: "tableModel",
     schema: {
       title: "表格",
-      type: "string", // 此处使用表格类型
+      type: "table", // 此处使用表格类型
       widget: "tableModel",
       props: {}
     },
@@ -461,6 +461,12 @@ export const advancedElements = [
         title: "",
         type: "object",
         widget: "tableSetting"
+      },
+      dataSource: {
+        title: "数据绑定",
+        type: "object",
+        props: {},
+        widget: "dataSource"
       }
     }
   },
