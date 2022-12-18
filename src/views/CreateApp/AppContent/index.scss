@@ -1,11 +1,10 @@
-.app-content-container {
-  padding: 5rem;
+.app-content-container,
+.app-form-container {
   display: flex;
   justify-content: center;
   background: #fff;
   height: 100%;
   .content {
-    max-width: 80rem;
     border: 1px solid #ececec;
     border-radius: 1rem;
     padding: 5rem;
@@ -18,5 +17,11 @@
       transform: translateX(-50%);
       margin-top: 2rem;
     }
+  }
+}
+.app-form-container {
+  padding: 5rem;
+  .content {
+    max-width: 80rem;
   }
 }

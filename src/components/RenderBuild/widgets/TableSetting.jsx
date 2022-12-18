@@ -22,7 +22,7 @@ const TableSetting = props => {
     const { needSearch, searchAlias } = tableConfig;
     setNeedSearch(needSearch);
     setSearchAlias(searchAlias);
-  }, []);
+  }, [tableConfig]);
 
   const settingChange = () => {};
 

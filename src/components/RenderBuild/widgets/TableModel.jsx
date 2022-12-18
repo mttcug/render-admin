@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Search, Table, useTable, withTable } from "table-render";
 import { message, Space } from "antd";
 import umiRequest from "@/interface/request";
@@ -6,21 +6,24 @@ import umiRequest from "@/interface/request";
 const TableModel = props => {
   const { schema = {} } = props;
   const { dataSource = "", tableConfig = {} } = schema;
-  const { needSearch, searchAlias } = tableConfig;
+  const { needSearch, searchAlias = [] } = tableConfig;
+
+  // 搜索框的schema和表头
+  //   const [searchSchema, setSearchSchema] = useState(defaultSearchSchema)
+  //   const [columns, setColumns] = useState([])
+
   // 根据数据源， 并根据数据源提供的接口名称 请求数据
   const { data = [], url = "" } = dataSource;
 
   const { refresh } = useTable();
 
-  // 配置完全透传antd table
   let columns = [];
-
-  let _schema = {
+  let searchSchema = {
     type: "object",
     properties: {},
     labelWidth: 80
   };
-
+  // 表头字段
   // 选择数据源
   if (dataSource) {
     const btns = {
@@ -48,54 +51,64 @@ const TableModel = props => {
         </Space>
       )
     };
-    columns = data.map(item => {
-      const { value: _value, label: _label, type: _type } = item;
-      return {
-        title: _value,
-        dataIndex: _label,
-        valueType: _type,
-        width: "20%"
-      };
-    });
-    columns.push(btns);
-    searchAlias &&
-      searchAlias.map(alias => {
-        const target = data.find(item => item.value === alias) || {};
-        target.label &&
-          (_schema.properties[target.label] = {
-            title: target.value,
-            type: target.type,
-            width: "20%"
-          });
-      });
-  }
-
-  // 请求数据集数据填充表格
-  const searchApi = (params, sorter) => {
-    if (!url) return {};
-    return umiRequest({
-      method: "get",
-      url: url,
-      params
-    })
-      .then(res => {
-        if (res && res.data) {
-          return {
-            rows: [...res.data, { money: null }],
-            total: res.data.length
-          };
-        }
-      })
-      .catch(e => {
-        console.log("Oops, error", e);
-
-        // 注意一定要返回 rows 和 total
+    columns =
+      data &&
+      data.map(item => {
+        const { value: _value, label: _label, type: _type } = item;
         return {
-          rows: [],
-          total: 0
+          title: _value,
+          dataIndex: _label,
+          valueType: _type,
+          width: "20%"
         };
       });
-  };
+    console.log("------&&&&&:", columns);
+    columns.push(btns);
+  }
+
+  // 搜索依赖的字段
+  searchAlias &&
+    searchAlias.map(alias => {
+      const target = data.find(item => item.value === alias) || {};
+      target.label &&
+        (searchSchema.properties[target.label] = {
+          title: target.value,
+          type: target.type,
+          width: "20%"
+        });
+    });
+
+  // 请求数据集数据填充表格
+  const searchApi =
+    url &&
+    ((params, sorter) => {
+      console.log("-----url0", url);
+      return umiRequest({
+        method: "get",
+        url: url,
+        params
+      })
+        .then(res => {
+          const data = res;
+          console.log("-----url1", res);
+          if (data) {
+            return {
+              rows: [...data, { money: null }],
+              total: data.length
+            };
+          }
+        })
+        .catch(e => {
+          console.log("-----url2", url);
+          console.log("Oops, error", e);
+
+          // 注意一定要返回 rows 和 total
+          return {
+            rows: [],
+            total: 0
+          };
+        });
+    });
 
   const showData = () => {
     refresh(null, { extra: 1 });
@@ -103,19 +116,18 @@ const TableModel = props => {
 
   return (
     <div>
-      <Search
-        hidden={!needSearch}
-        schema={_schema}
-        displayType="row"
-        api={((params, sorter) => {
-          console.log("-----^^^^^^");
-          return searchApi;
-        })()}
-      />
+      {url ? (
+        <Search
+          hidden={!needSearch}
+          schema={searchSchema}
+          displayType="row"
+          api={searchApi}
+        />
+      ) : null}
       <Table
-        pagination={{ pageSize: 4 }}
+        pagination={{ pageSize: 2 }}
         columns={columns}
-        rowKey="id"
+        rowKey="index"
         toolbarRender={() => []}
         toolbarAction
       />

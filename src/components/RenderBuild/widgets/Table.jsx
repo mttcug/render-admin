@@ -1,11 +1,13 @@
-import { Space, Table, Modal } from "antd";
+import { Space, Table, Tag, Modal } from "antd";
 import React, { useState, useEffect } from "react";
+import { tableDataApi } from "@/interface/index.js";
 import umiRequest from "@/interface/request";
 
 const SimpleTable = props => {
-  const { schema } = props;
+  const { onChange, schema } = props;
+  console.log("---666666:", props);
   const { dataSource = {} } = schema;
-  const { data: _data = [], value, url = "" } = dataSource;
+  const { data: _data = [], value, label, url = "" } = dataSource;
 
   const [columns, setCloumns] = useState([]);
   const [data, setTableData] = useState([]);

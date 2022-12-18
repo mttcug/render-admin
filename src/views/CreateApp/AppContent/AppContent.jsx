@@ -38,7 +38,13 @@ const AppContent = props => {
   };
 
   return (
-    <div className="app-content-container">
+    <div
+      className={
+        appInfo.appType === "form"
+          ? "app-form-container"
+          : "app-content-container"
+      }
+    >
       <div className="content">
         <p className="app-title">{appInfo.appName}</p>
         {schema ? (
@@ -46,9 +52,11 @@ const AppContent = props => {
         ) : (
           <Empty />
         )}
-        <Button className="submit" type="primary" onClick={submit}>
-          提交
-        </Button>
+        {appInfo.appType === "form" ? (
+          <Button className="submit" type="primary" onClick={submit}>
+            提交
+          </Button>
+        ) : null}
       </div>
     </div>
   );
